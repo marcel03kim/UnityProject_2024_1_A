@@ -35,8 +35,20 @@ public class ExCubePlayer : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log(collision.gameObject.name);
-        Point = 0;
-        gameObject.transform.position = Vector3.zero;
+        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.tag == "Pipe")
+        {
+            Point = 0;
+            gameObject.transform.position = Vector3.zero;
+        }
     }
+    void OntriggerEnter(Collider other)
+    { 
+        if(other.gameObject.tag == "Items")
+        {
+            Point += 10;
+            Destroy(other.gameObject);
+        }
+    }
+
 }
