@@ -8,6 +8,7 @@ public class ExResultScene : MonoBehaviour
 {
    public void GoToGame()
    {
-        SceneManager.LoadScene("24.04.04 °ú³á");
+        SceneManager.LoadScene("ResultScene");
    }
+   
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ExCubePlayer : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ExCubePlayer : MonoBehaviour
 
     public int Point = 0;
     public float checkTime = 0.0f;
+    public float checkEndTime = 30.0f;
 
     public Rigidbody m_Rigidbody;
 
@@ -29,6 +31,10 @@ public class ExCubePlayer : MonoBehaviour
             Power = Random.Range(100, 200);
             m_Rigidbody.AddForce(transform.up * Power);
         }
+
+        checkTime -= Time.deltaTime;
+
+        if(checkEndTime <= 0)
 
         TextUI.text = Point.ToString();
     }
