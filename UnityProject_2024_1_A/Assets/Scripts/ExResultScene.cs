@@ -6,9 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class ExResultScene : MonoBehaviour
 {
-   public void GoToGame()
+    public Text TextUI;
+
+    public void Start()
+    {
+        TextUI.text = PlayerPrefs.GetInt("Point").ToString();
+    }
+    public void GoToGame()
    {
-        SceneManager.LoadScene("ResultScene");
+        SceneManager.LoadScene("MainScene");
    }
    
 }

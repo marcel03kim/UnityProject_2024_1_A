@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene_Gun.unity
     guid: efb175264ab434a41ae632c0edc2af7d
   - enabled: 1
-    path: Assets/Scenes/GameScene_Jump.unity
-    guid: 7a85de5f6c702e841be1341dc502cbb2
-  - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 7172419eb63625543adde747b80cef7d
+  - enabled: 1
+    path: Assets/Scenes/GameScene_Jump.unity
+    guid: ffea7808c7aa06a4baf5a6064855eb53
   m_configObjects: {}

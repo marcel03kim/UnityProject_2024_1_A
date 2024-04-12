@@ -35,6 +35,10 @@ public class ExCubePlayer : MonoBehaviour
         checkTime -= Time.deltaTime;
 
         if(checkEndTime <= 0)
+        {
+            PlayerPrefs.SetInt("Point", Point);
+            SceneManager.LoadScene("ResultSene");
+        }
 
         TextUI.text = Point.ToString();
     }

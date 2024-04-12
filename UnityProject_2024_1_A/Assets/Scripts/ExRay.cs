@@ -8,9 +8,18 @@ public class ExRay : MonoBehaviour
 {
     public Text UIText;
     public int Point;
+    public float checkEndTime = 30.0f;
     // Update is called once per frame
     void Update()
     {
+        checkEndTime -= Time.deltaTime;
+
+        if(checkEndTime <= 0 )
+        {
+            PlayerPrefs.SetInt("Point", Point);
+            SceneManager.LoadScene("ResultScene");
+        }
+
         if(Input.GetMouseButtonDown(1))
         {
             Ray cast = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -26,7 +35,7 @@ public class ExRay : MonoBehaviour
                 {
                     Destroy(hit.collider.gameObject);
                     Point += 1;
-                    if (Point >= 10) DoChangeScene();
+                    //if (Point >= 10) DoChangeScene();  //¾ë Áö±Ý ¼³Á¤¿¡¼± »© µÒ
                 }
             }
             else
