@@ -10,18 +10,26 @@ public class circleObject : MonoBehaviour
 
     public int index;
 
+    public float EndTime = 0.0f;
+    public SpriteRenderer spriteRenderer;
+
+    public GameManager gameManager;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        isDrag = false;
         isUsed = false;
         rb.simulated = false;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        isUsed = false;
-        isDrag = false;
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+
+
     }
 
     // Update is called once per frame
@@ -34,13 +42,13 @@ public class circleObject : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            float leftBorder = -5.0f + transform.localScale.x / 2f;
-            float rightBorder = 5.0f - transform.localScale.x / 2f;
+            float leftBorder = -4.5f + transform.localScale.x / 2f;
+            float rightBorder = 4.5f - transform.localScale.x / 2f;
 
             if (mousePos.x < leftBorder) mousePos.x = leftBorder;
             if (mousePos.x > rightBorder) mousePos.x = rightBorder;
 
-            mousePos.y = 8;
+            mousePos.y = 5.5f;
             mousePos.z = 0;
             transform.position = Vector3.Lerp(transform.position, mousePos, 0.2f);
         }
@@ -61,11 +69,7 @@ public class circleObject : MonoBehaviour
         isUsed = true;
         rb.simulated = true;
 
-        GameObject temp = GameObject.FindWithTag("GameManager");
-        if(temp != null)
-        {
-            temp.gameObject.GetComponent<GameManager>().GenObject();
-        }
+        gameManager.GenObject();
     }
 
     public void Used()
@@ -75,6 +79,30 @@ public class circleObject : MonoBehaviour
         rb.simulated = true;
     }
 
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "EndLine")
+        {
+            EndTime += Time.deltaTime;
+            if (EndTime > 1f)
+            {
+                spriteRenderer.color = new Color(0.9f, 0.2f, 0.2f);
+            }
+            if (EndTime > 3)
+            {
+                gameManager.EndGame();
+            }
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "EndLine")
+        {
+            EndTime = 0.0f;
+            spriteRenderer.color = Color.white;
+        }
+    }
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (index >= 7)
@@ -88,11 +116,8 @@ public class circleObject : MonoBehaviour
             {
                 if(gameObject.GetInstanceID() > collision.gameObject.GetInstanceID())
                 {
-                    GameObject tempGameManager = GameObject.FindWithTag("GameManager");
-                    if (tempGameManager != null)
-                    {
-                        tempGameManager.gameObject.GetComponent<GameManager>().MergeObject(index, gameObject.transform.position);
-                    }
+                    gameManager.MergeObject(index, gameObject.transform.position);
+
                     Destroy(temp.gameObject);
                     Destroy(gameObject);
                 }
