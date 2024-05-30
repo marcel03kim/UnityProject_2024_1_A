@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
+    
     public GameObject[] fruit;
     public Transform genTransform;
     public float timeCheck;
@@ -13,8 +13,12 @@ public class GameManager : MonoBehaviour
 
     public int Point;
     public int BestScore;
+
     public static event Action<int> OnPointChanged;
     public static event Action<int> OnBestScoreChanged;
+
+    
+
     // Start is called before the first frame update
     void Start()
     {
